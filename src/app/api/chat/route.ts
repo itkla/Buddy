@@ -7,7 +7,7 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
   const { messages } = await req.json();
   const result = streamText({
-    model: openai.responses("gpt-4.5-preview"),
+    model: openai("gpt-4.5-preview"),
     messages,
     // tool calling
     tools: {
@@ -23,17 +23,19 @@ export async function POST(req: Request) {
         }),
       }),
       // openai web search tool
-      web_search_preview: openai.tools.webSearchPreview({
-        // web search tool parameters
-        searchContextSize: "high", // low | medium | high
-        userLocation: {
-          type: "approximate",
-          city: "Tokyo",
-          region: "Tokyo",
-          country: "Japan",
-          timezone: "Asia/Tokyo",
-        },
-      }),
+      web_search_preview: openai.tools.webSearchPreview(
+        {
+          // web search tool parameters
+          searchContextSize: "medium", // low | medium | high
+          userLocation: {
+            type: "approximate",
+            city: "Tokyo",
+            region: "Tokyo",
+            country: "Japan",
+            timezone: "Asia/Tokyo",
+          },
+        }
+      ),
     },
     maxSteps: 10,
   });

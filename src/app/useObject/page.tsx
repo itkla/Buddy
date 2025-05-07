@@ -2,6 +2,10 @@
 
 import { experimental_useObject as useObject } from '@ai-sdk/react';
 import { notificationSchema } from '@/app/api/notifications/scehma';
+import SectionTitle from '@/components/layout/SectionTitle';
+
+const title = "Use Object";
+const description = "The useObject hook allows you to generate an object using the AI SDK. This hook is useful when you want to generate an object using the AI SDK.";
 
 export default function Page() {
   // Loading State
@@ -41,17 +45,25 @@ export default function Page() {
 
   return (
     <div className='flex flex-col items-center justify-center gap-2 h-full min-h-screen w-full max-w-4xl mx-auto p-2'>
+      <SectionTitle title={title} description={description} />
+      
       {/*  show a loading spinner while loading. */}
       {isLoading && <div className='p-2 border animate-pulse bg-zinc-700'>Loading...</div>}
       {error && <div className='p-2 border animate-pulse bg-red-300'>An error occurred.</div>}
 
       <div className='flex flex-col gap-2 w-full p-2 border'>
-        {object?.notifications?.map((notification: any, index: number) => (
-          <div key={index} className='w-full p-2 border'>
-            <p>{notification?.name}</p>
-            <p>{notification?.message}</p>
+        {(!object) ? (
+          <div className='p-2 border'>
+            <p className='text-zinc-500'>Notifications</p>
           </div>
-        ))}
+        ) : (
+          object?.notifications?.map((notification: any, index: number) => (
+            <div key={index} className='w-full p-2 border'>
+              <p>{notification?.name}</p>
+              <p>{notification?.message}</p>
+            </div>
+          ))
+        )}
       </div>
 
       <div className='flex gap-2'>
