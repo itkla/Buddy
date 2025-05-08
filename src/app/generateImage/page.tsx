@@ -1,7 +1,6 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import Image from "next/image";
 import SectionTitle from "@/components/layout/SectionTitle";
 import { Trash2, Pencil, RotateCcw } from "lucide-react";
 
