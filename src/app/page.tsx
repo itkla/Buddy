@@ -27,7 +27,7 @@ const featureList: {
   },
   {
     name: "Image Generation",
-    href: "/image",
+    href: "/generateImage",
     status: "coming soon",
   },
   {
@@ -51,7 +51,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen">
       <div className="flex flex-col items-center justify-center gap-2 mb-6 tracking-wider">
-        <h1 className="text-4xl md:text-6xl font-bold">Hello, AI!</h1>
+        <h1 className="text-4xl md:text-6xl font-bold text-white">Hello, AI!</h1>
         <h2 className="text-sm md:text-md font-normal text-zinc-500">Playground for Vercel AI SDK</h2>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 items-center justify-center gap-2">
