@@ -6,7 +6,7 @@ import { Trash2, Pencil, RotateCcw } from "lucide-react";
 
 const title = "Image Generation";
 const description =
-  "Image Generation is a powerful AI model that can be used to generate images. Image Generation doesn't support model: openai.response() yet.";
+  "Use tool invocation to generate images, and save them locally.";
 
 export default function Page() {
   const {
