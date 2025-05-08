@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${robotoSans.variable} ${robotoMono.variable} antialiased`}>
+      <body className={`${robotoSans.variable} ${robotoMono.variable} bg-zinc-950 text-zinc-50 antialiased`}>
         <BackToHome />
         {children}
       </body>
