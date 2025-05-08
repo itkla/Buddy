@@ -4,20 +4,13 @@ import { useChat } from '@ai-sdk/react';
 import SectionTitle from '@/components/layout/SectionTitle';
 import { Trash2, Pencil, RotateCcw } from 'lucide-react';
 
-const title = "ChatGPT 4.5";
-const description = "ChatGPT 4.5 is a powerful AI model that can be used to generate text, images, and other content. ChatGPT 4.5 doesn't support model: openai.response() yet.";
+const title = "Reasoning";
+const description = "Some models support reasoning tokens. These tokens are typically sent before the message content. You can forward them to the client with the sendReasoning option.";
 
 export default function Page() {
-  // messages: array of messages
-  // setMessages: function to reset messages
-  // status: string
-  // stop: function to stop the chat
-  // reload: function to regenerate the chat
-  // input: string
-  // handleInputChange: function to handle input change
-  // handleSubmit: function to handle submit
-  // error: error
-  const { messages, setMessages, status, input, stop, reload, handleInputChange, handleSubmit, error } = useChat();
+  const { messages, setMessages, status, input, stop, reload, handleInputChange, handleSubmit, error } = useChat({
+    api: '/api/reasoning',
+  });
 
   const handleEdit = (id: string) => {
     setMessages(messages.map(message => message.id === id ? { ...message, content: input } : message));
@@ -55,9 +48,20 @@ export default function Page() {
                     {message.role === 'user' ? 'Me > ' : 'AI > '}
                   </span>
 
+                  
                   <span className='text-justify leading-relaxed'>
                     {message.content}
                   </span>
+
+                  {/* parts of the message */}
+                  <div className='text-indigo-800 text-sm'>
+                    {message.parts.map((part, index) => {
+                      if (part.type === 'reasoning') {
+                        return <pre key={index}>{part.details.map(detail => detail.type === 'text' ? detail.text : '<redacted>')}</pre>;
+                      }
+                      return <pre key={index}>{JSON.stringify(part, null, 2)}</pre>;
+                    })}
+                  </div>
 
                   {message.role === 'assistant' && status === 'ready' ? (
                     <span className='text-zinc-700 animate-pulse animate-duration-200'> _</span>
