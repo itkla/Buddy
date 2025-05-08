@@ -28,7 +28,7 @@ const featureList: {
   {
     name: "Image Generation",
     href: "/generateImage",
-    status: "done",
+    status: "in progress",
   },
   {
     name: "Multi-Agent",
