@@ -17,7 +17,7 @@ const featureList: {
   },
   {
     name: "Use Object",
-    href: "/useObject",
+    href: "/use-object",
     status: "done",
   },
   {
