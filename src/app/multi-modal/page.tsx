@@ -22,12 +22,12 @@ export default function Chat() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="flex flex-col gap-2 w-full max-w-md h-full min-h-screen py-24 mx-auto stretch">
+    <div className="flex flex-col items-center gap-2 w-full max-w-4xl h-full min-h-screen py-24 mx-auto stretch">
       <SectionTitle title="Multi Modal" description="A multi-modal AI-chatbot capable of understanding images and pdfs." />
-      <div className='flex flex-col gap-2 p-2 border'>
+      <div className='w-full flex flex-col gap-2 p-2 border'>
         {messages.length === 0 ? (
           <div className='text-center text-zinc-500'>
-            <p>Please upload an image or input text.</p>
+            <p>Please upload a file or input text.</p>
           </div>
         ) : (
           messages.map(m => (
@@ -62,7 +62,7 @@ export default function Chat() {
 
       {/* user input part */}
       <form
-        className="w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl space-y-2"
+        className="w-full p-2 mb-8 border border-gray-300 rounded shadow-xl space-y-2"
         onSubmit={event => {
           handleSubmit(event, {
             experimental_attachments: files,
@@ -76,13 +76,23 @@ export default function Chat() {
         }}
       >
         {/* text input part */}
-        <input
-          title="Input"
-          className="w-full p-2"
-          value={input}
-          placeholder="Say something..."
-          onChange={handleInputChange}
-        />
+        <div className='flex items-center justify-center gap-2'>
+          <input
+            title="Input"
+            className="w-full p-2 border"
+            value={input}
+            placeholder="Say something..."
+            onChange={handleInputChange}
+          />
+          {/* submit button */}
+          <button
+            title='Submit'
+            type="submit"
+            className='text-white p-2 border cursor-pointer hover:bg-zinc-700'
+          >
+            Submit
+          </button>
+        </div>
         {/* file upload part */}
         <input
           title="Upload file"
