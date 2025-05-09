@@ -11,6 +11,11 @@ const featureList: {
     status: "done",
   },
   {
+    name: "Token Usage",
+    href: "/token-usage",
+    status: "done",
+  },
+  {
     name: "Use Object",
     href: "/useObject",
     status: "done",
