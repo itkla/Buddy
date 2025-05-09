@@ -57,9 +57,9 @@ export default function Page() {
                   <div className='text-indigo-800 text-sm'>
                     {message.parts.map((part, index) => {
                       if (part.type === 'reasoning') {
-                        return <pre key={index}>{part.details.map(detail => detail.type === 'text' ? detail.text : '<redacted>')}</pre>;
+                        return <p key={index}>{part.reasoning}</p>;
                       }
-                      return <pre key={index}>{JSON.stringify(part, null, 2)}</pre>;
+                      return <p key={index}>{JSON.stringify(part, null, 2)}</p>;
                     })}
                   </div>
 

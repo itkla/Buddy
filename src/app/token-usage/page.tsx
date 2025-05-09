@@ -1,6 +1,8 @@
 'use client';
 
-import { useChat } from '@ai-sdk/react';
+import { useChat, Message, } from '@ai-sdk/react';
+import { LanguageModelUsage } from 'ai';
+import { useState } from 'react';
 import SectionTitle from '@/components/layout/SectionTitle';
 import { Trash2, Pencil, RotateCcw } from 'lucide-react';
 
@@ -8,8 +10,15 @@ const title = "Token Usage";
 const description = "This is a simple token usage tracker for the OpenAI API. It shows the number of tokens used for each message in the chat.";
 
 export default function Page() {
+  const [usage, setUsage] = useState<LanguageModelUsage | null>(null);
   const { messages, setMessages, status, input, stop, reload, handleInputChange, handleSubmit, error } = useChat({
-    api: '/api/token-usage',
+    api: '/api/tokenUsage',
+    onFinish: (message: Message, options: {
+      usage: LanguageModelUsage;
+      finishReason: string;
+    }) => {
+      setUsage(options.usage);
+    },
   });
 
   const handleEdit = (id: string) => {
@@ -95,9 +104,36 @@ export default function Page() {
 
                   </div>
                 ) : null}
+                
               </div>
             ))}
-
+            {/* usage of the message */}
+              <div className='flex flex-col gap-1 p-2 text-zinc-500 text-sm border'>
+                <h1>Token Usage</h1>
+                <span>{`{`}</span>
+                  <div className='flex items-center'>
+                    <span>&emsp;type:&nbsp;</span>
+                    <span className='text-purple-400/80'>promptTokens</span>
+                    &nbsp;-&nbsp;
+                    <span className='text-amber-500'>usage:&nbsp;</span>
+                    <span className='text-pink-400/90'>{usage?.promptTokens}</span>
+                  </div>
+                  <div className='flex items-center'>
+                    <span>&emsp;type:&nbsp;</span>
+                    <span className='text-purple-400/80'>completionTokens</span>
+                    &nbsp;-&nbsp;
+                    <span className='text-amber-500'>usage:&nbsp;</span>
+                    <span className='text-pink-400/90'>{usage?.completionTokens}</span>
+                  </div>
+                  <div className='flex items-center'>
+                    <span>&emsp;type:&nbsp;</span>
+                    <span className='text-purple-400/80'>totalTokens</span>
+                    &nbsp;-&nbsp;
+                    <span className='text-amber-500'>usage:&nbsp;</span>
+                    <span className='text-pink-400/90'>{usage?.totalTokens}</span>
+                  </div>
+                <span>{`}`}</span>
+            </div>
           </>
         )}
       </div>
