@@ -27,8 +27,8 @@ const featureList: {
   },
   {
     name: "Multi-Modal",
-    href: "/multiModal",
-    status: "coming soon",
+    href: "/multi-modal",
+    status: "in progress",
   },
   {
     name: "Image Generation",
