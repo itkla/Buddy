@@ -11,8 +11,13 @@ const featureList: {
     status: "done",
   },
   {
+    name: "Token Usage",
+    href: "/token-usage",
+    status: "done",
+  },
+  {
     name: "Use Object",
-    href: "/useObject",
+    href: "/use-object",
     status: "done",
   },
   {
@@ -22,8 +27,8 @@ const featureList: {
   },
   {
     name: "Multi-Modal",
-    href: "/multiModal",
-    status: "coming soon",
+    href: "/multi-modal",
+    status: "done",
   },
   {
     name: "Image Generation",
