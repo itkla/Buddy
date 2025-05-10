@@ -6,7 +6,7 @@ import Image from 'next/image';
 import SectionTitle from '@/components/layout/SectionTitle';
 
 export default function Chat() {
-  const { messages, status, input, handleInputChange, handleSubmit } = useChat({
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "/api/multiModal",
     onFinish: () => {
       // メッセージが完了したら、画面の最下部にスクロール
