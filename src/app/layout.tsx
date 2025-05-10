@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import BackToHome from "@/components/common/BackToHome";
+import { ThemeProvider } from "@/components/common/ThemeProvider";
+import ThemeToggle from "@/components/common/ThemeToggle";
+
 const robotoSans = Roboto({
   variable: "--font-roboto-sans",
   subsets: ["latin"],
@@ -25,9 +28,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${robotoSans.variable} ${robotoMono.variable} bg-zinc-950 text-zinc-50 antialiased`}>
-        <BackToHome />
-        {children}
-      </body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ThemeToggle className="fixed top-2 left-2" />
+            <BackToHome />
+            {children}
+          </ThemeProvider>
+        </body>
     </html>
   );
 }
