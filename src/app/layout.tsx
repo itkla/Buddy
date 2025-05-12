@@ -34,9 +34,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <ThemeToggle className="fixed top-2 left-2" />
-            <BackToHome />
+            {/* <ThemeToggle className="fixed top-2 left-2" /> */}
+            <BackToHome className="fixed top-4 left-4 z-50" />
             {children}
+            <ThemeToggle className="fixed bottom-4 right-4 z-50" />
           </ThemeProvider>
         </body>
     </html>
