@@ -6,8 +6,8 @@ const featureList: {
   status: "coming soon" | "in progress" | "done";
 }[] = [
   {
-    name: "ChatGPT 4.5",
-    href: "/chatgpt",
+    name: "ChatGPT",
+    href: "/chat",
     status: "done",
   },
   {

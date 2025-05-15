@@ -148,7 +148,7 @@ export default function Page() {
                                         return (
                                             <div key={toolCallId} className="mt-2 max-w-[85%] w-full flex justify-start">
                                                 <ProductRecommendation {...result} />
-                  </div>
+                                            </div>
                                         );
                                     }
                                 }
