@@ -6,6 +6,16 @@ import { user_embeddings, assistant_embeddings } from '../db/schema';
 
 const embeddingModel = openai.embedding('text-embedding-ada-002');
 
+/*
+* generateChunks()
+*
+* @params:
+*   - input: string
+*   - minChunkLength: number?
+*   - maxQuestionChunkWords: number?
+*
+* @returns: string[]
+*/
 const generateChunks = (input: string, minChunkLength = 5, maxQuestionChunkWords = 7): string[] => {
     if (!input) return [];
 
@@ -28,24 +38,28 @@ const generateChunks = (input: string, minChunkLength = 5, maxQuestionChunkWords
         });
 };
 
+// Generate embeddings for the provided value.
 export const generateEmbeddings = async (value: string): Promise<Array<{ embedding: number[]; content: string }>> => {
     const chunks = generateChunks(value);
     const { embeddings } = await embedMany({ model: embeddingModel, values: chunks });
     return embeddings.map((e, i) => ({ content: chunks[i], embedding: e }));
 };
 
+// Generate a single embedding for the provided value.
 export const generateEmbedding = async (value: string): Promise<number[]> => {
     const input = value.replaceAll('\n', ' ');
     const { embedding } = await embed({ model: embeddingModel, value: input });
     return embedding;
 };
 
+// Find relevant content from the database based on the user's query.
 export const findRelevantContent = async (userQuery: string) => {
     const userQueryEmbedded = await generateEmbedding(userQuery);
     
     const initialRetrievalLimit = 15; // How many to fetch initially 
-    const similarityThreshold = 0.5; 
+    const similarityThreshold = 0.5; // Minimum similarity score to consider a match
 
+    // Search for relevant user context
     console.log(`[Embedding] Searching user_embeddings with limit=${initialRetrievalLimit}, threshold=${similarityThreshold}`);
     const userSimilarity = sql<number>`1 - (${cosineDistance(user_embeddings.embedding, userQueryEmbedded)})`;
     const similarUserDocsPromise = db.select({ 
@@ -57,6 +71,7 @@ export const findRelevantContent = async (userQuery: string) => {
                                   .orderBy(desc(userSimilarity)) // Order initially by similarity
                                   .limit(initialRetrievalLimit); // Fetch more initially
 
+    // Search for relevant llm context
     console.log(`[Embedding] Searching assistant_embeddings with limit=${initialRetrievalLimit}, threshold=${similarityThreshold}`);
     const assistantSimilarity = sql<number>`1 - (${cosineDistance(assistant_embeddings.embedding, userQueryEmbedded)})`;
     const similarAssistantDocsPromise = db.select({
@@ -81,7 +96,8 @@ export const findRelevantContent = async (userQuery: string) => {
         ...similarAssistantDocs.map(doc => ({ ...doc, source: 'assistant' }))
     ];
 
-    // --- Re-ranking with ONLY Statement Boost --- 
+    // --- Re-ranking --- 
+    // Boost non-question statements
     const statementBoostValue = 0.25; // Keep boost for non-questions
 
     const rescoredDocs = combinedInitialDocs.map(doc => {

@@ -146,7 +146,7 @@ export async function POST(req: Request) {
 
             // Construct the new content with RAG context
             const newContentWithContext = `You are a helpful assistant. Based on the CONTEXT from our past conversation, answer the USER QUESTION. 
-If the answer is in the CONTEXT, please use it. 
+If the answer is in the CONTEXT, please use it. Do NOT make up an answer. Do NOT mention that you are using the CONTEXT.
 **Important:** If the CONTEXT contains conflicting information (e.g., a direct answer AND a statement that the answer is unknown), prioritize the most factual and direct answer, especially if it comes from a user statement. Use your best judgment to determine the correct answer based on the available context.
 
 CONTEXT:

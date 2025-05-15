@@ -2,6 +2,7 @@ import { db } from './index';
 import { user_embeddings, assistant_embeddings } from './schema';
 import { generateEmbeddings } from '@/lib/ai/embedding';
 
+// Upsert user document chunks into the user_embeddings table.
 export async function upsertUserDocumentChunks(content: string, userId?: string) {
     try {
         console.log(`[DB Actions] Generating embeddings for user content chunks: "${content.substring(0, 50)}..."`);

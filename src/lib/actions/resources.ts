@@ -9,6 +9,8 @@ import { db } from '../db';
 import { generateEmbeddings } from '../ai/embedding';
 import { embeddings as embeddingsTable } from '../db/schema/embeddings';
 
+
+// insert a new resource into the database
 export const createResource = async (input: NewResourceParams) => {
     try {
         const { content } = insertResourceSchema.parse(input);
